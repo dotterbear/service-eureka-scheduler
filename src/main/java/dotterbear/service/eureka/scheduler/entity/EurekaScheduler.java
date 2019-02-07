@@ -1,4 +1,4 @@
-package dotterbear.service.erueka.scheduler.entity;
+package dotterbear.service.eureka.scheduler.entity;
 
 import java.util.Date;
 import java.util.List;

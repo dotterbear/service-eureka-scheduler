@@ -10,7 +10,7 @@ import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.amazonaws.services.dynamodbv2.util.TableUtils;
 
-import dotterbear.service.erueka.scheduler.entity.EurekaScheduler;
+import dotterbear.service.eureka.scheduler.entity.EurekaScheduler;
 import dotterbear.service.eureka.scheduler.manager.EurekaSchedulerManager;
 
 @SpringBootApplication
