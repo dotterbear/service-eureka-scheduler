@@ -1,7 +1,5 @@
 package dotterbear.service.eureka.scheduler.manager;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +18,11 @@ public class EurekaSchedulerManager {
 	@Value("${scheduler.config.name}")
 	private String schedulerConfigName;
 
-	// @EventListener(ApplicationReadyEvent.class)
 	public Optional<EurekaScheduler> reload() {
-		System.out.println("Start");
-		Optional<EurekaScheduler> config = eurekaSchedulerRepository.findById(schedulerConfigName);
-		List<String> taskList = Optional.ofNullable(config.get()).map(EurekaScheduler::getTaskList)
-				.orElse(new ArrayList<String>());
-		// TODO: config
-		return null;
+		return Optional.empty();
 	}
 
+	public Optional<EurekaScheduler> getConfig() {
+		return eurekaSchedulerRepository.findById(schedulerConfigName);
+	}
 }
