@@ -11,6 +11,7 @@ import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.amazonaws.services.dynamodbv2.util.TableUtils;
 
 import dotterbear.service.eureka.scheduler.entity.EurekaScheduler;
+import dotterbear.service.eureka.scheduler.manager.EurekaSchedulerManager;
 
 @SpringBootApplication
 public class ServiceSchedulerApplication {
@@ -19,6 +20,8 @@ public class ServiceSchedulerApplication {
 		ConfigurableApplicationContext context = SpringApplication.run(ServiceSchedulerApplication.class, args);
 
 		initializeTables(context.getBean(AmazonDynamoDB.class));
+
+		context.getBean(EurekaSchedulerManager.class).reload();
 	}
 
 	private static void initializeTables(AmazonDynamoDB amazonDynamoDB) {
