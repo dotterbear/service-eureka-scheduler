@@ -19,7 +19,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig.Pagin
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig.SaveBehavior;
 
 @Configuration
-@EnableDynamoDBRepositories(basePackages = "dotterbear.service.rss.reader.repository")
+@EnableDynamoDBRepositories(basePackages = "dotterbear.service.eureka.scheduler.repository")
 public class DynamoDBConfig {
 
   @Value("${amazon.dynamodb.endpoint}")

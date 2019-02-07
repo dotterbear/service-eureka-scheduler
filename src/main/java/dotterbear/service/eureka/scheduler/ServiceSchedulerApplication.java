@@ -20,7 +20,7 @@ public class ServiceSchedulerApplication {
 		ConfigurableApplicationContext context = SpringApplication.run(ServiceSchedulerApplication.class, args);
 
 		initializeTables(context.getBean(AmazonDynamoDB.class));
-		
+
 		context.getBean(EurekaSchedulerManager.class).reload();
 	}
 
