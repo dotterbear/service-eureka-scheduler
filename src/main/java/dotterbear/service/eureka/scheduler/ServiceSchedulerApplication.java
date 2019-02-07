@@ -21,7 +21,7 @@ public class ServiceSchedulerApplication {
 
 		initializeTables(context.getBean(AmazonDynamoDB.class));
 
-		context.getBean(EurekaSchedulerManager.class).reload();
+		// context.getBean(EurekaSchedulerManager.class).reload();
 	}
 
 	private static void initializeTables(AmazonDynamoDB amazonDynamoDB) {
