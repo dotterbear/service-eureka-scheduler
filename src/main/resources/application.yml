@@ -6,6 +6,9 @@ spring:
       INDENT_OUTPUT: true
   application:
     name: service-eureka-scheduler
+  devtools:
+    restart:
+      enabled: false
 eureka:
   client:
     register-with-eureka: true
@@ -28,7 +31,7 @@ amazon:
     secretkey: ENC(6mPLYf51WVS9QUP7nfcgyt50ugZx/pVI)
 ---
 spring: 
-  profiles: prod  
+  profiles: prod
 amazon:
   dynamodb:
     endpoint: ENC(nVi2J9RZcoAkQ/02B/rxkHm+1KHauKEuObjUqEfdsztmnGFpGbXG7Q==)

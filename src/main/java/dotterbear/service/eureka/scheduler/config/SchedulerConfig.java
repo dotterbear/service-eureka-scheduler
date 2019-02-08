@@ -28,8 +28,8 @@ import dotterbear.service.eureka.scheduler.entity.EurekaScheduler;
 import dotterbear.service.eureka.scheduler.entity.TaskMap;
 import dotterbear.service.eureka.scheduler.manager.EurekaSchedulerManager;
 
-// @Configuration
-// @EnableScheduling
+@Configuration
+@EnableScheduling
 public class SchedulerConfig implements SchedulingConfigurer {
 
 	@Autowired
@@ -41,7 +41,7 @@ public class SchedulerConfig implements SchedulingConfigurer {
 	@Autowired
 	private EurekaClient eurekaClient;
 
-	@Bean(destroyMethod = "shutdown")
+	@Bean(destroyMethod = "shutdownNow")
 	public Executor taskExecutor() {
 		return Executors.newScheduledThreadPool(10);
 	}
@@ -49,10 +49,11 @@ public class SchedulerConfig implements SchedulingConfigurer {
 	@Override
 	public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
 		taskRegistrar.setScheduler(taskExecutor());
-		Optional<EurekaScheduler> config = eurekaSchedulerManager.getConfig();
-		List<String> taskList = Optional.ofNullable(config.get()).map(EurekaScheduler::getTaskList)
+		Optional<EurekaScheduler> eurekaScheduler = eurekaSchedulerManager.getConfig();
+		EurekaScheduler config = eurekaScheduler.isPresent() ? eurekaScheduler.get() : null;
+		List<String> taskList = Optional.ofNullable(config).map(EurekaScheduler::getTaskList)
 				.orElse(new ArrayList<String>());
-		Map<String, TaskMap> taskMap = Optional.ofNullable(config.get()).map(EurekaScheduler::getTaskMap)
+		Map<String, TaskMap> taskMap = Optional.ofNullable(config).map(EurekaScheduler::getTaskMap)
 				.orElse(new HashMap<String, TaskMap>());
 		taskList.parallelStream().map(taskMap::get).collect(Collectors.toList())
 				.forEach(task -> taskRegistrar.addTriggerTask(() -> {
@@ -60,13 +61,12 @@ public class SchedulerConfig implements SchedulingConfigurer {
 					InstanceInfo instanceInfo = application.getInstances().get(0);
 					String url = "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/"
 							+ task.getPath();
-					String response = restTemplate.getForObject(url, String.class);
-					System.out.println("RESPONSE " + response);
+					restTemplate.getForObject(url, String.class);
 				}, triggerContext -> {
 					Calendar nextExecutionTime = new GregorianCalendar();
 					Date lastActualExecutionTime = triggerContext.lastActualExecutionTime();
 					nextExecutionTime.setTime(lastActualExecutionTime != null ? lastActualExecutionTime : new Date());
-					nextExecutionTime.add(Calendar.MILLISECOND, 100000);
+					nextExecutionTime.add(Calendar.MILLISECOND, Integer.parseInt(task.getRate()));
 					return nextExecutionTime.getTime();
 				}));
 	}
