@@ -17,6 +17,7 @@ eureka:
 server:
   port: 8763
 scheduler:
+  enable: true
   config:
     name: config
 ---

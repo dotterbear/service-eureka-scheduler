@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -29,6 +30,7 @@ import dotterbear.service.eureka.scheduler.entity.EurekaScheduler;
 import dotterbear.service.eureka.scheduler.entity.TaskMap;
 import dotterbear.service.eureka.scheduler.manager.EurekaSchedulerManager;
 
+@ConditionalOnProperty(value = "scheduler.enable", havingValue = "true", matchIfMissing = true)
 @Configuration
 @EnableScheduling
 public class SchedulerConfig implements SchedulingConfigurer {
