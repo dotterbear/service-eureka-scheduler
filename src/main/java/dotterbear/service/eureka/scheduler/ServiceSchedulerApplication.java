@@ -16,19 +16,18 @@ import dotterbear.service.eureka.scheduler.manager.EurekaSchedulerManager;
 @SpringBootApplication
 public class ServiceSchedulerApplication {
 
-	public static void main(String[] args) {
-		ConfigurableApplicationContext context = SpringApplication.run(ServiceSchedulerApplication.class, args);
+  public static void main(String[] args) {
+    ConfigurableApplicationContext context =
+        SpringApplication.run(ServiceSchedulerApplication.class, args);
+    initializeTables(context.getBean(AmazonDynamoDB.class));
+    context.getBean(EurekaSchedulerManager.class).reload();
+  }
 
-		initializeTables(context.getBean(AmazonDynamoDB.class));
-
-		context.getBean(EurekaSchedulerManager.class).reload();
-	}
-
-	private static void initializeTables(AmazonDynamoDB amazonDynamoDB) {
-		DynamoDBMapper dynamoDBMapper = new DynamoDBMapper(amazonDynamoDB);
-		CreateTableRequest tableRequest = dynamoDBMapper.generateCreateTableRequest(EurekaScheduler.class);
-		tableRequest.setProvisionedThroughput(new ProvisionedThroughput(1L, 1L));
-		TableUtils.createTableIfNotExists(amazonDynamoDB, tableRequest);
-	}
-
+  private static void initializeTables(AmazonDynamoDB amazonDynamoDB) {
+    DynamoDBMapper dynamoDBMapper = new DynamoDBMapper(amazonDynamoDB);
+    CreateTableRequest tableRequest =
+        dynamoDBMapper.generateCreateTableRequest(EurekaScheduler.class);
+    tableRequest.setProvisionedThroughput(new ProvisionedThroughput(1L, 1L));
+    TableUtils.createTableIfNotExists(amazonDynamoDB, tableRequest);
+  }
 }

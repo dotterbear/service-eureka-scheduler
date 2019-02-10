@@ -6,6 +6,4 @@ import org.springframework.stereotype.Repository;
 import dotterbear.service.eureka.scheduler.entity.EurekaScheduler;
 
 @Repository
-public interface EurekaSchedulerRepository extends CrudRepository<EurekaScheduler, String> {
-
-}
+public interface EurekaSchedulerRepository extends CrudRepository<EurekaScheduler, String> {}

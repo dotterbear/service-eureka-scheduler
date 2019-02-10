@@ -12,17 +12,16 @@ import dotterbear.service.eureka.scheduler.repository.EurekaSchedulerRepository;
 @Component
 public class EurekaSchedulerManager {
 
-	@Autowired
-	private EurekaSchedulerRepository eurekaSchedulerRepository;
+  @Autowired private EurekaSchedulerRepository eurekaSchedulerRepository;
 
-	@Value("${scheduler.config.name}")
-	private String schedulerConfigName;
+  @Value("${scheduler.config.name}")
+  private String schedulerConfigName;
 
-	public Optional<EurekaScheduler> reload() {
-		return Optional.empty();
-	}
+  public Optional<EurekaScheduler> reload() {
+    return Optional.empty();
+  }
 
-	public Optional<EurekaScheduler> getConfig() {
-		return eurekaSchedulerRepository.findById(schedulerConfigName);
-	}
+  public Optional<EurekaScheduler> getConfig() {
+    return eurekaSchedulerRepository.findById(schedulerConfigName);
+  }
 }

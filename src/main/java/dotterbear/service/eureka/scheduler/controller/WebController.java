@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
 public class WebController {
 
-	@GetMapping("reload")
-	@ResponseBody
-	public String reload(@RequestParam("id") String id) {
-		return null;
-	}
-
+  @GetMapping("reload")
+  @ResponseBody
+  public String reload(@RequestParam("id") String id) {
+    return null;
+  }
 }

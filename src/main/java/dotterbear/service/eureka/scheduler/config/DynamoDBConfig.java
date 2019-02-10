@@ -22,40 +22,44 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig.SaveB
 @EnableDynamoDBRepositories(basePackages = "dotterbear.service.eureka.scheduler.repository")
 public class DynamoDBConfig {
 
-	@Value("${amazon.dynamodb.endpoint}")
-	private String amazonDynamoDBEndpoint;
+  @Value("${amazon.dynamodb.endpoint}")
+  private String amazonDynamoDBEndpoint;
 
-	@Value("${amazon.dynamodb.location}")
-	private String amazonDynamoDBLocation;
+  @Value("${amazon.dynamodb.location}")
+  private String amazonDynamoDBLocation;
 
-	@Value("${amazon.aws.accesskey}")
-	private String amazonAWSAccessKey;
+  @Value("${amazon.aws.accesskey}")
+  private String amazonAWSAccessKey;
 
-	@Value("${amazon.aws.secretkey}")
-	private String amazonAWSSecretKey;
+  @Value("${amazon.aws.secretkey}")
+  private String amazonAWSSecretKey;
 
-	@Bean
-	public AmazonDynamoDB amazonDynamoDB(AWSCredentialsProvider awsCredentialsProvider) {
-		return AmazonDynamoDBClientBuilder.standard()
-				.withEndpointConfiguration(new EndpointConfiguration(amazonDynamoDBEndpoint, amazonDynamoDBLocation))
-				.withCredentials(awsCredentialsProvider).build();
-	}
+  @Bean
+  public AmazonDynamoDB amazonDynamoDB(AWSCredentialsProvider awsCredentialsProvider) {
+    return AmazonDynamoDBClientBuilder.standard()
+        .withEndpointConfiguration(
+            new EndpointConfiguration(amazonDynamoDBEndpoint, amazonDynamoDBLocation))
+        .withCredentials(awsCredentialsProvider)
+        .build();
+  }
 
-	@Bean
-	public DynamoDBMapperConfig dynamoDBMapperConfig() {
-		return new DynamoDBMapperConfig.Builder().withSaveBehavior(SaveBehavior.CLOBBER)
-				.withConsistentReads(ConsistentReads.CONSISTENT)
-				.withPaginationLoadingStrategy(PaginationLoadingStrategy.EAGER_LOADING).build();
-	}
+  @Bean
+  public DynamoDBMapperConfig dynamoDBMapperConfig() {
+    return new DynamoDBMapperConfig.Builder()
+        .withSaveBehavior(SaveBehavior.CLOBBER)
+        .withConsistentReads(ConsistentReads.CONSISTENT)
+        .withPaginationLoadingStrategy(PaginationLoadingStrategy.EAGER_LOADING)
+        .build();
+  }
 
-	@Bean
-	public AWSCredentials amazonAWSCredentials() {
-		return new BasicAWSCredentials(amazonAWSAccessKey, amazonAWSSecretKey);
-	}
+  @Bean
+  public AWSCredentials amazonAWSCredentials() {
+    return new BasicAWSCredentials(amazonAWSAccessKey, amazonAWSSecretKey);
+  }
 
-	@Bean
-	@Primary
-	public AWSCredentialsProvider awsCredentialsProvider() {
-		return new DefaultAWSCredentialsProviderChain();
-	}
+  @Bean
+  @Primary
+  public AWSCredentialsProvider awsCredentialsProvider() {
+    return new DefaultAWSCredentialsProviderChain();
+  }
 }

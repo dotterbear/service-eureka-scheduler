@@ -32,43 +32,57 @@ import dotterbear.service.eureka.scheduler.manager.EurekaSchedulerManager;
 @EnableScheduling
 public class SchedulerConfig implements SchedulingConfigurer {
 
-	@Autowired
-	private EurekaSchedulerManager eurekaSchedulerManager;
+  @Autowired private EurekaSchedulerManager eurekaSchedulerManager;
 
-	@Autowired
-	private RestTemplate restTemplate;
+  @Autowired private RestTemplate restTemplate;
 
-	@Autowired
-	private EurekaClient eurekaClient;
+  @Autowired private EurekaClient eurekaClient;
 
-	@Bean(destroyMethod = "shutdownNow")
-	public Executor taskExecutor() {
-		return Executors.newScheduledThreadPool(10);
-	}
+  @Bean(destroyMethod = "shutdownNow")
+  public Executor taskExecutor() {
+    return Executors.newScheduledThreadPool(10);
+  }
 
-	@Override
-	public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
-		taskRegistrar.setScheduler(taskExecutor());
-		Optional<EurekaScheduler> eurekaScheduler = eurekaSchedulerManager.getConfig();
-		EurekaScheduler config = eurekaScheduler.isPresent() ? eurekaScheduler.get() : null;
-		List<String> taskList = Optional.ofNullable(config).map(EurekaScheduler::getTaskList)
-				.orElse(new ArrayList<String>());
-		Map<String, TaskMap> taskMap = Optional.ofNullable(config).map(EurekaScheduler::getTaskMap)
-				.orElse(new HashMap<String, TaskMap>());
-		taskList.parallelStream().map(taskMap::get).collect(Collectors.toList())
-				.forEach(task -> taskRegistrar.addTriggerTask(() -> {
-					Application application = eurekaClient.getApplication(task.getName());
-					InstanceInfo instanceInfo = application.getInstances().get(0);
-					String url = "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/"
-							+ task.getPath();
-					restTemplate.getForObject(url, String.class);
-				}, triggerContext -> {
-					Calendar nextExecutionTime = new GregorianCalendar();
-					Date lastActualExecutionTime = triggerContext.lastActualExecutionTime();
-					nextExecutionTime.setTime(lastActualExecutionTime != null ? lastActualExecutionTime : new Date());
-					nextExecutionTime.add(Calendar.MILLISECOND, Integer.parseInt(task.getRate()));
-					return nextExecutionTime.getTime();
-				}));
-	}
-
+  @Override
+  public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
+    taskRegistrar.setScheduler(taskExecutor());
+    Optional<EurekaScheduler> eurekaScheduler = eurekaSchedulerManager.getConfig();
+    System.out.println(eurekaScheduler);
+    EurekaScheduler config = eurekaScheduler.isPresent() ? eurekaScheduler.get() : null;
+    List<String> taskList =
+        Optional.ofNullable(config)
+            .map(EurekaScheduler::getTaskList)
+            .orElse(new ArrayList<String>());
+    Map<String, TaskMap> taskMap =
+        Optional.ofNullable(config)
+            .map(EurekaScheduler::getTaskMap)
+            .orElse(new HashMap<String, TaskMap>());
+    taskList
+        .parallelStream()
+        .map(taskMap::get)
+        .collect(Collectors.toList())
+        .forEach(
+            task ->
+                taskRegistrar.addTriggerTask(
+                    () -> {
+                      Application application = eurekaClient.getApplication(task.getName());
+                      InstanceInfo instanceInfo = application.getInstances().get(0);
+                      String url =
+                          "http://"
+                              + instanceInfo.getIPAddr()
+                              + ":"
+                              + instanceInfo.getPort()
+                              + task.getPath();
+                      System.out.println(url);
+                      restTemplate.getForObject(url, String.class);
+                    },
+                    triggerContext -> {
+                      Calendar nextExecutionTime = new GregorianCalendar();
+                      Date lastActualExecutionTime = triggerContext.lastActualExecutionTime();
+                      nextExecutionTime.setTime(
+                          lastActualExecutionTime != null ? lastActualExecutionTime : new Date());
+                      nextExecutionTime.add(Calendar.MILLISECOND, Integer.parseInt(task.getRate()));
+                      return nextExecutionTime.getTime();
+                    }));
+  }
 }
