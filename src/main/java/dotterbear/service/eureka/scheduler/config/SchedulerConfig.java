@@ -12,6 +12,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +32,8 @@ import dotterbear.service.eureka.scheduler.manager.EurekaSchedulerManager;
 @Configuration
 @EnableScheduling
 public class SchedulerConfig implements SchedulingConfigurer {
+
+  Logger logger = Logger.getLogger(SchedulerConfig.class);
 
   @Autowired private EurekaSchedulerManager eurekaSchedulerManager;
 
@@ -73,7 +76,7 @@ public class SchedulerConfig implements SchedulingConfigurer {
                               + ":"
                               + instanceInfo.getPort()
                               + task.getPath();
-                      System.out.println(url);
+                      logger.info("Fetch eureka client: " + task.getName() + ", url: " + url);
                       restTemplate.getForObject(url, String.class);
                     },
                     triggerContext -> {

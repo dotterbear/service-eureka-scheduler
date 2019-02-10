@@ -17,10 +17,6 @@ public class EurekaSchedulerManager {
   @Value("${scheduler.config.name}")
   private String schedulerConfigName;
 
-  public Optional<EurekaScheduler> reload() {
-    return Optional.empty();
-  }
-
   public Optional<EurekaScheduler> getConfig() {
     return eurekaSchedulerRepository.findById(schedulerConfigName);
   }
