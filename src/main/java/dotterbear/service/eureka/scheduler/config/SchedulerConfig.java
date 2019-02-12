@@ -61,7 +61,7 @@ public class SchedulerConfig implements SchedulingConfigurer {
 				.forEach(task -> taskRegistrar.addTriggerTask(() -> {
 					Application application = eurekaClient.getApplication(task.getName());
 					InstanceInfo instanceInfo = application.getInstances().get(0);
-					String url = "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + task.getPath();
+					String url = "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/" + task.getPath();
 					logger.info("Fetch eureka client: " + task.getName() + ", url: " + url);
 					restTemplate.getForObject(url, String.class);
 				}, triggerContext -> {
