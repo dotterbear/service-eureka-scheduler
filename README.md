@@ -1,8 +1,8 @@
 # service-eureka-scheduler
 
-# Development
+### Development
 
-## Prerequisites
+##### Prerequisites
 * JAVA 8 Runtime
 * Maven >= 3.3
 
