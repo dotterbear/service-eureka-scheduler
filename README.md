@@ -1,5 +1,10 @@
-### service-eureka-scheduler
+# service-eureka-scheduler
 
-TODO
+# Development
 
-- Ribbon
+## Prerequisites
+* JAVA 8 Runtime
+* Maven >= 3.3
+
+### TODO List
+- [] Ribbon
