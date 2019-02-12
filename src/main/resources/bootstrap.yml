@@ -1,0 +1,8 @@
+server:
+  port: 8763
+spring:
+  application:
+    name: service-eureka-scheduler
+  cloud:
+    config:
+      uri: ENC(4Y69G6W/dqIxavdzLyOJqaFC4cpsEjqWeXYWlTXKOofBg7VA/vQW/g==)
