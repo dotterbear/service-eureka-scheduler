@@ -53,7 +53,6 @@ public class SchedulerConfig implements SchedulingConfigurer {
 		SchedulerPropertiesConfig schedulerPropertiesConfig = propertiesService.getSchedulerPropertiesConfig();
 		List<String> configList = schedulerPropertiesConfig.getConfigList();
 		Map<String, ConfigMap> configMap = schedulerPropertiesConfig.getConfigMap();
-		System.out.println(propertiesService.getSchedulerPropertiesConfig());
 		if (configList.isEmpty()) {
 			return;
 		}
