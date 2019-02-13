@@ -12,14 +12,15 @@ public class SchedulerPropertiesConfig {
 
 	private boolean enable;
 
-	private List<String> configList = new ArrayList<String>();
+	private List<String> configList = new ArrayList<>();
 
-	private Map<String, ConfigMap> configMap = new HashMap<String, ConfigMap>();
+	private Map<String, ConfigMap> configMap = new HashMap<>();
 
 	public SchedulerPropertiesConfig() {
 	}
 
 	public SchedulerPropertiesConfig(boolean enable, List<String> configList, Map<String, ConfigMap> configMap) {
+	    this.enable = enable;
 		this.configMap = configMap;
 		this.configList = configList;
 		this.configMap = configMap;
