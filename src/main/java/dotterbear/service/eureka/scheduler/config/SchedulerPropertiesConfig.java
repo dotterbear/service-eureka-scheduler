@@ -20,10 +20,9 @@ public class SchedulerPropertiesConfig {
 	}
 
 	public SchedulerPropertiesConfig(boolean enable, List<String> configList, Map<String, ConfigMap> configMap) {
-	    this.enable = enable;
-		this.configMap = configMap;
+        this.enable = enable;
+        this.configMap = configMap;
 		this.configList = configList;
-		this.configMap = configMap;
 	}
 
 	public boolean getEnable() {
