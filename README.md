@@ -8,3 +8,4 @@
 
 ### TODO List
 - [] Ribbon
+- [] Retry
