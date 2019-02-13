@@ -64,8 +64,13 @@ public class SchedulerConfig implements SchedulingConfigurer {
       }, triggerContext -> {
         Calendar nextExecutionTime = new GregorianCalendar();
         Date lastActualExecutionTime = triggerContext.lastActualExecutionTime();
-        nextExecutionTime.setTime(lastActualExecutionTime != null ? lastActualExecutionTime : new Date());
-        nextExecutionTime.add(Calendar.MILLISECOND, task.getRate());
+        if (lastActualExecutionTime == null) {
+          nextExecutionTime.setTime(new Date());
+          nextExecutionTime.add(Calendar.MILLISECOND, 60000);
+        } else {
+	      nextExecutionTime.setTime(lastActualExecutionTime);
+	      nextExecutionTime.add(Calendar.MILLISECOND, task.getRate());
+        }
         return nextExecutionTime.getTime();
       }));
     }
