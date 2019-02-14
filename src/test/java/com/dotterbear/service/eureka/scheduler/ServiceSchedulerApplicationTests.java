@@ -1,4 +1,4 @@
-package dotterbear.service.eureka.scheduler;
+package com.dotterbear.service.eureka.scheduler;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

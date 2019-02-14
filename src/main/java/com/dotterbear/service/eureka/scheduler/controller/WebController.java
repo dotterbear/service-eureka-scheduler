@@ -1,4 +1,4 @@
-package dotterbear.service.eureka.scheduler.controller;
+package com.dotterbear.service.eureka.scheduler.controller;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;

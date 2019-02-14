@@ -1,4 +1,4 @@
-package dotterbear.service.eureka.scheduler;
+package com.dotterbear.service.eureka.scheduler;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,11 +21,11 @@ public class ServiceSchedulerApplication {
   @Bean
   public ServletRegistrationBean<HystrixMetricsStreamServlet> getServlet() {
     HystrixMetricsStreamServlet streamServlet = new HystrixMetricsStreamServlet();
-    ServletRegistrationBean<HystrixMetricsStreamServlet> registrationBean = new ServletRegistrationBean<>(streamServlet);
+    ServletRegistrationBean<HystrixMetricsStreamServlet> registrationBean =
+        new ServletRegistrationBean<>(streamServlet);
     registrationBean.setLoadOnStartup(1);
     registrationBean.addUrlMappings("/hystrix.stream");
     registrationBean.setName("HystrixMetricsStreamServlet");
     return registrationBean;
   }
-
 }

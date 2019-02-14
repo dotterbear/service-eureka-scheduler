@@ -1,4 +1,4 @@
-package dotterbear.service.eureka.scheduler.config;
+package com.dotterbear.service.eureka.scheduler.config;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
