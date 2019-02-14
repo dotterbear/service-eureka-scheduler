@@ -1,5 +1,9 @@
 # service-eureka-scheduler
 
+A fixed rate scheduler to call other eureka client with restTemplate, ribbon and hystrix.
+
+For more details, please see [service-overview](https://github.com/dotterbear/service-overview).
+
 ### Development
 
 ##### Prerequisites
