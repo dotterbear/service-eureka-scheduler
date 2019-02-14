@@ -11,10 +11,5 @@
 - [] Logging
 - [] Cron
 
-### Release Note
+### [Release Note](https://github.com/dotterbear/service-eureka-scheduler/wiki/Release-Note)
 
-##### 13 February, 2019
-
-* **Enhanced RestTemplate Request** - enable Ribbon and Hystrix for load balancing and failure handling
-
-* **Trigger scheduler after init** - trigger scheduler in 1 min after initialized
