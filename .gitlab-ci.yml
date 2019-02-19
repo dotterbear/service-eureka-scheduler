@@ -8,7 +8,7 @@ build_jar:
   artifacts:
     untracked: true
   script:
-    - mvn clean package -Djasypt.encryptor.password=$JASYPT_ENCRYTOR_PASSWORD
+    - mvn clean package -Djasypt.encryptor.password=$JASYPT_ENCRYTOR_PASSWORD -Dspring.profiles.active=dev
 
 build_image:
   stage: image
