@@ -4,13 +4,13 @@ A fixed rate scheduler to call other eureka client with restTemplate, ribbon and
 
 For more details, please see [service-overview](https://github.com/dotterbear/service-overview).
 
-### Development
+## Development
 
-##### Prerequisites
+#### Prerequisites
 * JAVA 8 Runtime
 * Maven >= 3.3
 
-### TODO List
+## TODO List
 - [] Retry
 - [] Logging
 - [] Cron
