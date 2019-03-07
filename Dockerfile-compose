@@ -1,0 +1,5 @@
+FROM maven:latest
+COPY pom.xml /app/
+COPY src /app/src/
+WORKDIR /app/
+EXPOSE 8762
